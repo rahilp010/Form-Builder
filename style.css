@@ -1,0 +1,320 @@
+@import 'tailwindcss';
+
+/* ─────────────────────────────────────────────────────────────
+   Fractional HR — warm editorial palette
+   Parchment canvas, polished warm brass accent, clay secondary,
+   Fraunces display serif + Inter body.
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+
+  --color-accent: #8f651e;
+  --color-accent-hover: #765215;
+  --color-accent-soft: #f7f0e0;
+  --color-clay: #b96a45;
+  --color-clay-soft: #f5e7dd;
+  --color-parchment: #f7f3ea;
+  --color-ink: #1f2a24;
+}
+
+:root {
+  --sidebar-w: 280px;
+  --properties-w: 320px;
+  --header-h: 60px;
+  --radius: 12px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Warm neutral palette */
+  --bg: #f7f3ea;
+  --surface: #fffcf6;
+  --surface-2: #f1eadc;
+  --surface-active: #ffffff;
+  --border: #e5dccb;
+  --border-focus: #8f651e;
+  --text-primary: #1f2a24;
+  --text-secondary: #5d6a5f;
+  --text-muted: #8b948a;
+
+  /* Polished warm brass accent (accessible contrast on light surfaces) */
+  --accent: #8f651e;
+  --accent-hover: #765215;
+  --accent-soft: #f7f0e0;
+  --accent-contrast: #ffffff;
+  --clay: #b96a45;
+  --clay-soft: #f5e7dd;
+  --danger: #a94438;
+  --danger-soft: #f8e7e3;
+  --success: #3e7a55;
+
+  /* Soft editorial shadows */
+  --shadow-card: 0 1px 2px rgba(43, 38, 28, 0.04),
+    0 16px 32px -24px rgba(43, 38, 28, 0.35);
+  --shadow-accent: 0 12px 28px -16px rgba(143, 101, 30, 0.45);
+  --shadow-soft: 0 1px 3px rgba(43, 38, 28, 0.06);
+
+  /* Selection highlight */
+  --selected-ring: 0 0 0 2px var(--accent);
+  --selected-bg: var(--accent-soft);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Layered charcoal-green surfaces */
+  --bg: #0a0d0b;
+  --surface: #121813;
+  --surface-2: #1a221b;
+  --surface-active: #242e25;
+  --border: #2b352d;
+  --border-focus: #d6b67f;
+  --text-primary: #f5f0e4;
+  --text-secondary: #c0c6b8;
+  --text-muted: #8d958a;
+
+  /* Champagne brass accent */
+  --accent: #d6b67f;
+  --accent-hover: #e4c995;
+  --accent-soft: #2a2418;
+  --accent-contrast: #191308;
+  --clay: #c98f6b;
+  --clay-soft: #2d2119;
+  --danger: #e58f85;
+  --danger-soft: rgba(229, 143, 133, 0.14);
+  --success: #8fc4a2;
+
+  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 1px 2px rgba(0, 0, 0, 0.45), 0 28px 56px -32px rgba(0, 0, 0, 0.9);
+  --shadow-accent: 0 16px 36px -20px rgba(214, 182, 127, 0.45);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.5);
+
+  --selected-ring: 0 0 0 2px var(--accent);
+  --selected-bg: var(--accent-soft);
+
+  /* Keep Tailwind color utilities in sync with the dark palette */
+  --color-accent: #d6b67f;
+  --color-accent-hover: #e4c995;
+  --color-accent-soft: #2a2418;
+  --color-clay: #c98f6b;
+  --color-clay-soft: #2d2119;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01' on, 'cv11' on;
+}
+
+/* Editorial display type for headings */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Reusable surface primitives ────────────────────────────── */
+.fh-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.fh-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.fh-rule {
+  height: 1px;
+  background: var(--border);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Focus ring consistency */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* Selection color */
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ── Align @rahilp010/custom-control tokens with the theme ───── */
+:root {
+  --cc-primary: 143 101 30;
+  --cc-primary-hover: 118 82 21;
+  --cc-on-primary: 255 255 255;
+  --cc-surface: 255 252 246;
+  --cc-surface-2: 241 234 220;
+  --cc-text: 31 42 36;
+  --cc-muted: 139 148 138;
+  --cc-subtle: 241 234 220;
+}
+
+[data-theme='dark'] {
+  --cc-primary: 214 182 127;
+  --cc-primary-hover: 228 201 149;
+  --cc-on-primary: 25 19 8;
+  --cc-surface: 18 24 19;
+  --cc-surface-2: 26 34 27;
+  --cc-text: 245 240 228;
+  --cc-muted: 141 149 138;
+  --cc-subtle: 26 34 27;
+}
+
+/* Keep labels readable on solid accent surfaces in both themes */
+.bg-accent {
+  color: var(--accent-contrast);
+}
+.bg-clay {
+  color: var(--accent-contrast);
+}
+
+/* ── Floating iOS-style dock ─────────────────────────────────── */
+.view-dock {
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  box-shadow: 0 24px 50px -22px rgba(43, 38, 28, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+[data-theme='dark'] .view-dock {
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  border-color: color-mix(in srgb, var(--border) 90%, transparent);
+  box-shadow: 0 30px 64px -26px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(214, 182, 127, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+/* ── Modern glass app header ─────────────────────────────────
+   Translucent, blurred chrome with a specular top edge.
+   Light mode gets the same layered treatment as dark so the
+   navbar never falls back to a flat opaque strip. */
+.app-header {
+  background-color: rgba(255, 252, 246, 0.72);
+  background-color: color-mix(in srgb, var(--surface) 58%, transparent);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0) 78%
+  );
+  border-bottom-color: color-mix(in srgb, var(--border) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(20px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 16px 40px -34px rgba(43, 38, 28, 0.55);
+  transition: background-color 0.35s var(--ease-out),
+    border-bottom-color 0.35s var(--ease-out);
+}
+
+[data-theme='dark'] .app-header {
+  background-color: rgba(18, 24, 19, 0.72);
+  background-color: color-mix(in srgb, var(--surface) 55%, transparent);
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(255, 255, 255, 0) 78%
+  );
+  border-bottom-color: color-mix(in srgb, var(--border) 80%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px -32px rgba(0, 0, 0, 0.95);
+}
+
+/* ── Premium dark-theme refinements ───────────────────────────
+   Warm the neutral grays and give elevated surfaces a slight
+   top-edge sheen so cards do not disappear into the canvas. */
+[data-theme='dark'] .fh-card {
+  background-image: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.035) 0%,
+    rgba(255, 255, 255, 0) 45%
+  );
+}
+
+[data-theme='dark'] .text-gray-400,
+[data-theme='dark'] .text-neutral-500 {
+  color: var(--text-muted);
+}
+[data-theme='dark'] .text-gray-500,
+[data-theme='dark'] .text-gray-600 {
+  color: var(--text-secondary);
+}
+[data-theme='dark'] .text-gray-700,
+[data-theme='dark'] .text-gray-800,
+[data-theme='dark'] .text-gray-900 {
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .bg-white,
+[data-theme='dark'] .bg-gray-50,
+[data-theme='dark'] .bg-gray-100,
+[data-theme='dark'] .bg-gray-200,
+[data-theme='dark'] .bg-gray-300,
+[data-theme='dark'] .bg-gray-700,
+[data-theme='dark'] .bg-gray-800 {
+  background-color: var(--surface-2);
+}
+[data-theme='dark'] .bg-gray-400 {
+  background-color: var(--text-muted);
+}
+
+[data-theme='dark'] .border-gray-100,
+[data-theme='dark'] .border-gray-200,
+[data-theme='dark'] .border-gray-300,
+[data-theme='dark'] .border-gray-700,
+[data-theme='dark'] .border-gray-800,
+[data-theme='dark'] .border-neutral-800 {
+  border-color: var(--border);
+}
+
+[data-theme='dark'] .hover\:bg-gray-100:hover,
+[data-theme='dark'] .hover\:bg-gray-200:hover,
+[data-theme='dark'] .hover\:bg-gray-700:hover,
+[data-theme='dark'] .hover\:bg-gray-800:hover {
+  background-color: var(--surface-2);
+}
+[data-theme='dark'] .hover\:text-gray-900:hover,
+[data-theme='dark'] .hover\:text-gray-100:hover {
+  color: var(--text-primary);
+}
